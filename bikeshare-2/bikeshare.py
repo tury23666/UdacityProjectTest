@@ -65,7 +65,7 @@ def load_data(city, month, day):
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     
     df['month'] = df['Start Time'].dt.month
-    df['day_of_week'] = df['Start Time'].dt.weekday_name
+    df['day_of_week'] = df['Start Time'].dt.day_name
     if month != 'all':
         # use the index of the months list to get the corresponding int
         months = ['january', 'february', 'march', 'april', 'may', 'june']
@@ -85,16 +85,16 @@ def time_stats(df):
     
     # TO DO: display the most common month
     df['month'].value_counts()
-    popular_month = df['month'].mode()[0]
+    popular_month = df['month'].mode()
     print("Most common month: " , popular_month)
     # TO DO: display the most common day of week
     df['day_of_week'].value_counts()
-    popular_day = df['day_of_week'].mode()[0]
+    popular_day = df['day_of_week'].mode()
     print("Most common day of the week: " , popular_day)
 
     # TO DO: display the most common start hour
     df['hour'] = df['Start Time'].dt.hour
-    popular_hour = df['hour'].mode()[0]
+    popular_hour = df['hour'].mode()
     print("Most common start hour: " , popular_hour)
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -106,18 +106,18 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
     # TO DO: display most commonly used start station
-    popular_start_station = df['Start Station'].mode()[0]
+    popular_start_station = df['Start Station'].mode()
     print("Most commonly used start station: " , popular_start_station)
 
     # TO DO: display most commonly used end station
-    popular_end_station = df['End Station'].mode()[0]
+    popular_end_station = df['End Station'].mode()
     print("Most commonly used end station: " , popular_end_station)
 
     # TO DO: display most frequent combination of start station and end station trip
     df['Station Pair'] = df['Start Station'] + ' <-> ' + df['End Station']
-    most_common_pair = df['Station Pair'].mode()[0]
+    most_common_pair = df['Station Pair'].mode()
     sp_counts = df['Station Pair'].value_counts()
-    print("The most common trip is: ", most_common_pair, " count: ", sp_counts[0] )
+    print("The most common trip is: ", most_common_pair, " count: ", sp_counts)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -132,7 +132,7 @@ def trip_duration_stats(df):
 #     print(df['End Time'].dtype) 
 
     # TO DO: display total travel time
-    most_common_pair = df['Station Pair'].mode()[0]
+    most_common_pair = df['Station Pair'].mode()
 #     print(most_common_pair)
     df['time_travel'] = pd.to_datetime (df['End Time']) - pd.to_datetime (df['Start Time'])
     subset_df = df[df['Station Pair'] == most_common_pair]
